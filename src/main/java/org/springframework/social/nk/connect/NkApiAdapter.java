@@ -19,16 +19,16 @@ public class NkApiAdapter implements ApiAdapter<Nk> {
 			return false;
 		}
 	}
-
+	
 	public UserProfile fetchUserProfile(Nk nk) {
 		NkProfile profile = nk.getUserProfile();
-		return new UserProfileBuilder().setName(profile.getName()).build();
+		return new UserProfileBuilder().setName(profile.getDisplayName()).build();
 		// TODO set email
 	}
 
 	public void setConnectionValues(Nk api, ConnectionValues values) {
 		NkProfile profile = api.getUserProfile();
-		values.setDisplayName(profile.getName());
+		values.setDisplayName(profile.getDisplayName());
 		values.setProviderUserId(profile.getId());
 		// TODO
 
