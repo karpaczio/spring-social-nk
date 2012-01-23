@@ -1,0 +1,49 @@
+{
+ "startIndex":0,
+ "totalResults":39,
+ "itemsPerPage":2,
+ "entry":
+ [ {
+   "id":"person.27295d8aa249a645",
+   "currentLocation":{
+     "region":"Warszawa"
+   },
+   "thumbnailUrl":"http://photos.nk-net.pl/79/1/card_avatar/1/6be830ab6c.jpeg",
+   "name": { 
+     "formatted":"Anna Kowalska",
+     "additionalName":"Kowalska",
+     "familyName":"Kowalska",
+     "givenName":"Anna"
+   },
+   "photos": [{
+      "value":"http://photos.nk-net.pl/79/1/card_avatar/1/6be830ab6c.jpeg",
+      "type":"thumbnail" }],
+   "displayName":"Gal Anonim",
+   "gender":"male",
+   "hasApp":false,
+   "profileUrl":"http://m.nk.pl/index.html?s=lt&m=profile&a[a]=12345",
+   "urls": [{
+     "value":"http://m.nk.pl/index.html?s=lt&m=profile&a[a]=12345",
+     "type":"profile" }]
+  },{
+   "id":"person.14aa297d05dee515",
+   "currentLocation":"Breslau",
+   "thumbnailUrl":"http://photos.nk-net.pl/17/117/card_avatar/16/54e3be2f9d.jpeg",
+   "name": { 
+      "formatted":"Beata Kowalska (Nowak)",
+      "additionalName":"Kowalska (Nowak)",
+      "familyName":"Kowalska",
+      "givenName":"Beata"
+   },
+   "photos": [{
+      "value":"http://photos.nk-net.pl/17/117/card_avatar/16/54e3be2f9d.jpeg",
+      "type":"thumbnail" }],
+   "displayName":"Jan Chryzostom Achmistrowicz-Wchamistrowicz (¯y¿yñski)",
+   "gender":"male",
+   "hasApp":true,
+   "profileUrl":"http://m.nk.pl/index.html?s=lt&m=profile&a[a]=777",
+   "urls": [{
+     "value":"http://m.nk.pl/index.html?s=lt&m=profile&a[a]=777",
+     "type":"profile" }]
+  }]
+}

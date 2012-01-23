@@ -1,0 +1,24 @@
+{
+ "startIndex":0,
+ "totalResults":2,
+ "itemsPerPage":2,
+ "entry":[
+   {
+     "id":"album.3",
+     "title":"some title",
+     "description":"some description",
+     "ownerId":"person.abc",
+     "mediaMimeType":["image/jpeg"],
+     "mediaType":["image"],
+     "mediaItemCount":1
+   },{
+     "id":"album.2",
+     "title":"another title",
+     "description":"another description",
+     "ownerId":"person.abc",
+     "mediaMimeType":["image/jpeg"],
+     "thumbnailUrl":"http://photos.nasza-klasa.pl/125/10/thumb/6646b702e7.jpeg",
+     "mediaType":["image"],
+     "mediaItemCount":3
+   }]
+}

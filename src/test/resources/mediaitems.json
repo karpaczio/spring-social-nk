@@ -1,0 +1,34 @@
+{
+ "startIndex":0,
+ "totalResults":2,
+ "itemsPerPage":2,
+ "entry":[
+   {
+     "id":"mediaitem.82",
+     "albumId":"album.1",
+     "numVotes":"0",
+     "rating":"0",
+     "created":"2010-03-23T10:41:51.000Z",
+     "url":"http://photos.nasza-klasa.pl/3/3/thumb/8e5e0bfd4a.jpeg",
+     "thumbnailUrl":"http://photos.nk-net.pl/22/75/thumb/8cce9c2424.jpeg",
+     "type":"image",
+     "mimeType":"image/jpeg",
+     "nk_addedBy":"person.1332123",
+     "description":"jhgujk",
+     "nkNumSuperVotes":"0",
+     "nkCreatedTime":1306926434000
+   },{
+     "id":"mediaitem.81",
+     "albumId":"album.1",
+     "numVotes":1,
+     "rating":4,
+     "created":"2010-03-23T10:29:14.000Z",
+     "thumbnailUrl":"http://photos.nasza-klasa.pl/125/10/thumb/6646b702e7.jpeg",
+     "type":"image",
+     "url":"http://photos.nasza-klasa.pl/3/3/thumb/8e5e0bfd4a.jpeg",
+     "mimeType":"image/jpeg",
+     "nk_addedBy":"person.1332123",
+     "nkNumSuperVotes":"0",
+     "nkCreatedTime":1306926432000 
+   }]
+}

@@ -1,0 +1,19 @@
+
+{
+    "show_all_inline_media":false,
+
+  "entry": {
+    "isOwner":true,
+    "isViewer":true,
+    "id":"person.1f68d19f92386d8c",
+    "thumbnailUrl":"http://3pp.omega.nknet/62795/2/card_avatar/1/757d21f489.jpeg",
+    "name":{
+      "formatted":"£ukasz Uruski (Kubek)"},
+    "photos":[
+      {
+        "value":"http://3pp.omega.nknet/62795/2/card_avatar/1/757d21f489.jpeg",
+        "type":"thumbnail"}
+    ],
+    "displayName":"£ukasz Uruski (Kubek)"
+  }
+}

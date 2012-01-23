@@ -6,9 +6,8 @@ import org.springframework.social.nk.api.Nk;
 
 public class NkConnectionFactory extends OAuth2ConnectionFactory<Nk> {
 
-	public NkConnectionFactory(String clientKey, String clientSecret, ProtectedResourceDetails resource) {
+    public NkConnectionFactory(String clientKey, String clientSecret, ProtectedResourceDetails resource) {
 
-		super("nk", new NkServiceProvider(clientKey, clientSecret, resource),
-				new NkApiAdapter());
-	}
+        super("nk", new NkServiceProvider(clientKey, clientSecret, resource), new NkApiAdapter());
+    }
 }
