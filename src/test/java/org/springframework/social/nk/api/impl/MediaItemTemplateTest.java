@@ -3,14 +3,10 @@ package org.springframework.social.nk.api.impl;
 import static org.junit.Assert.assertEquals;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.social.nk.api.impl.AbstractNkTemplate.SOCIAL_REST_URL_BASE;
 import static org.springframework.social.test.client.RequestMatchers.method;
 import static org.springframework.social.test.client.RequestMatchers.requestTo;
 import static org.springframework.social.test.client.ResponseCreators.withResponse;
-import static org.springframework.social.nk.api.impl.AbstractNkTemplate.SOCIAL_REST_URL_BASE;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 
 import org.apache.shindig.protocol.RestfulCollection;
 import org.apache.shindig.social.opensocial.model.MediaItem;
