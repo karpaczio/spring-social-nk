@@ -9,37 +9,22 @@ import java.lang.reflect.Type;
 import org.codehaus.jackson.JsonProcessingException;
 import org.codehaus.jackson.type.TypeReference;
 import org.springframework.http.HttpInputMessage;
-import org.springframework.http.HttpOutputMessage;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
-import org.springframework.social.nk.oauth.consumer.client.NkCoreOAuthConsumerSupport;
 
+/**
+ */
 public class TypeReferenceJacksonMessageConverter extends MappingJacksonHttpMessageConverter {
 
-    private final NkCoreOAuthConsumerSupport oauthConsumerSupport;
-
-    public TypeReferenceJacksonMessageConverter(NkCoreOAuthConsumerSupport oauthConsumerSupport) {
-        super();
-        this.oauthConsumerSupport = oauthConsumerSupport;
-    }
-
-    @Override
-    protected void writeInternal(Object object, HttpOutputMessage outputMessage) throws IOException,
-            HttpMessageNotWritableException {
-        super.writeInternal(object, outputMessage);
-
-        byte[] bodyAsBytes = null;
-        if (object != null) {
-            // TODO can we get it from outputMessage.getBody() ?
-            bodyAsBytes = this.getObjectMapper().writeValueAsBytes(object);
-            this.oauthConsumerSupport.setOAuthBodyHash(bodyAsBytes);
-        }
-
-        this.oauthConsumerSupport.addAuthorizationHeader(outputMessage);
-    }
-
+    /**
+     * Method canRead.
+     * @param clazz Class<?>
+     * @param mediaType MediaType
+     * @return boolean
+     * @see org.springframework.http.converter.HttpMessageConverter#canRead(Class<?>, MediaType)
+     */
+    @SuppressWarnings("javadoc")
     @Override
     public boolean canRead(Class<?> clazz, MediaType mediaType) {
 
@@ -51,6 +36,14 @@ public class TypeReferenceJacksonMessageConverter extends MappingJacksonHttpMess
         return super.canRead(clazz, mediaType);
     }
 
+    /**
+     * Method readInternal.
+     * @param clazz Class<?>
+     * @param inputMessage HttpInputMessage
+     * @return Object
+     * @throws IOException
+     * @throws HttpMessageNotReadableException
+     */
     @Override
     protected Object readInternal(Class<?> clazz, HttpInputMessage inputMessage) throws IOException,
             HttpMessageNotReadableException {

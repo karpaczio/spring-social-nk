@@ -9,12 +9,26 @@ import org.springframework.core.io.Resource;
 import org.springframework.security.oauth.consumer.ProtectedResourceDetails;
 import org.springframework.social.test.client.MockRestServiceServer;
 
+/**
+ */
 public abstract class AbstractTemplateTest {
 
+    /**
+     * Field resource.
+     */
     private ProtectedResourceDetails resource;
+    /**
+     * Field nk.
+     */
     protected NkTemplate nk;
+    /**
+     * Field mockServer.
+     */
     protected MockRestServiceServer mockServer; 
     
+    /**
+     * Method setup.
+     */
     @Before
     public void setup() {
         this.resource = mock(ProtectedResourceDetails.class);
@@ -25,6 +39,11 @@ public abstract class AbstractTemplateTest {
         this.mockServer = MockRestServiceServer.createServer(this.nk.getRestTemplate());
     }
     
+    /**
+     * Method jsonResource.
+     * @param filename String
+     * @return Resource
+     */
     protected Resource jsonResource(String filename) {
         return  new ClassPathResource("/" + filename + ".json", getClass());
     }

@@ -18,12 +18,21 @@ import pl.nk.opensocial.model.NkActivityImpl;
 import pl.nk.opensocial.model.NkPerson;
 import pl.nk.opensocial.model.NkPersonImpl;
 
+/**
+ */
 public class NkModule extends SimpleModule {
 
+    /**
+     * Constructor for NkModule.
+     */
     public NkModule() {
         super("NkModule", new Version(0, 0, 1, "SNAPSHOT"));
     }
 
+    /**
+     * Method setupModule.
+     * @param context SetupContext
+     */
     @Override
     public void setupModule(SetupContext context) {
 
@@ -44,13 +53,28 @@ public class NkModule extends SimpleModule {
         super.setupModule(context);
     }
 
+    /**
+     */
     class CustomEnumResolver<T extends Enum<T>> extends EnumResolver<T> {
+        /**
+         * Constructor for CustomEnumResolver.
+         * @param enumClass Class<T>
+         * @param enums T[]
+         * @param map HashMap<String,T>
+         */
         CustomEnumResolver(Class<T> enumClass, T[] enums, HashMap<String, T> map) {
             super(enumClass, enums, map);
         }
     }
 
+    /**
+     */
     class NkJacksonAnnotationIntrospector extends JacksonAnnotationIntrospector {
+        /**
+         * Method findEnumValue.
+         * @param value Enum<?>
+         * @return String
+         */
         @Override
         public String findEnumValue(Enum<?> value) {
             if (MediaItem.Type.class.equals(value.getClass())) {

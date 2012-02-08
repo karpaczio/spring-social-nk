@@ -27,34 +27,94 @@ import org.springframework.social.nk.api.PublicOperations;
 import org.springframework.social.nk.api.RateOperations;
 import org.springframework.social.nk.api.RecommendOperations;
 import org.springframework.social.nk.http.converter.json.NkFormHttpMessageConverter;
-import org.springframework.social.nk.http.converter.json.TypeReferenceJacksonMessageConverter;
+import org.springframework.social.nk.http.converter.json.NkJacksonMessageConverter;
 import org.springframework.social.nk.oauth.consumer.client.NkCoreOAuthConsumerSupport;
 import org.springframework.social.nk.oauth.consumer.client.NkOAuthClientHttpRequestFactory;
 import org.springframework.social.oauth2.AbstractOAuth2ApiBinding;
+import org.springframework.social.support.ClientHttpRequestFactorySelector;
+import org.springframework.web.client.RestTemplate;
 
 import pl.nk.opensocial.model.NkPerson;
 
-@SuppressWarnings("rawtypes")
+/**
+ */
 public class NkTemplate extends AbstractOAuth2ApiBinding implements Nk {
 
+    /**
+     * Field accessToken.
+     */
     private String accessToken;
+    /**
+     * Field oauthConsumerSupport.
+     */
     private final NkCoreOAuthConsumerSupport oauthConsumerSupport;
+    /**
+     * Field unsecureRestTemplate.
+     */
+    private RestTemplate unsecureRestTemplate;
 
-    private AbusesOperations abusesOperations;
+    /**
+     * Field abusesOperations.
+     */
+    private AbusesOperations<AbusesTemplate> abusesOperations;
+    /**
+     * Field activityOperations.
+     */
     private ActivityOperations<ActivityTemplate> activityOperations;
+    /**
+     * Field albumOperations.
+     */
     private AlbumOperations<AlbumTemplate> albumOperations;
+    /**
+     * Field applicationOperations.
+     */
     private ApplicationOperations<ApplicationTemplate> applicationOperations;
-    private CommentOperations commentOperations;
-    private GiftOperations giftOperations;
-    private GroupOperations groupOperations;
+    /**
+     * Field commentOperations.
+     */
+    private CommentOperations<CommentTemplate> commentOperations;
+    /**
+     * Field giftOperations.
+     */
+    private GiftOperations<GiftTemplate> giftOperations;
+    /**
+     * Field groupOperations.
+     */
+    private GroupOperations<GroupTemplate> groupOperations;
+    /**
+     * Field mediaItemOperations.
+     */
     private MediaItemOperations<MediaItemTemplate> mediaItemOperations;
-    private MessageOperations messageOperations;
-    private PaymentOperations paymentOperations;
+    /**
+     * Field messageOperations.
+     */
+    private MessageOperations<MessageTemplate> messageOperations;
+    /**
+     * Field paymentOperations.
+     */
+    private PaymentOperations<PaymentTemplate> paymentOperations;
+    /**
+     * Field peopleOperations.
+     */
     private PeopleOperations<PeopleTemplate> peopleOperations;
-    private RateOperations rateOperations;
-    private RecommendOperations recommendOperations;
+    /**
+     * Field rateOperations.
+     */
+    private RateOperations<RateTemplate> rateOperations;
+    /**
+     * Field recommendOperations.
+     */
+    private RecommendOperations<RecommendTemplate> recommendOperations;
+    /**
+     * Field publicOperations.
+     */
     private PublicOperations publicOperations;
 
+    /**
+     * Constructor for NkTemplate.
+     * @param accessToken String
+     * @param resource ProtectedResourceDetails
+     */
     public NkTemplate(String accessToken, ProtectedResourceDetails resource) {
         super();
         this.accessToken = accessToken;
@@ -64,80 +124,176 @@ public class NkTemplate extends AbstractOAuth2ApiBinding implements Nk {
                 new NkOAuthClientHttpRequestFactory(getRestTemplate().getRequestFactory(), resource,
                         oauthConsumerSupport));
         getRestTemplate().setMessageConverters(getMessageConverters());
+        unsecureRestTemplate = new RestTemplate(ClientHttpRequestFactorySelector.getRequestFactory());
         initSubApis();
     }
 
+    /**
+     * Method isAuthorized.
+     * @return boolean
+     * @see org.springframework.social.ApiBinding#isAuthorized()
+     */
     public boolean isAuthorized() {
         return this.accessToken != null;
     }
 
+    /**
+     * Method getUserProfile.
+     * @return NkPerson
+     */
     public NkPerson getUserProfile() {
         return peopleOperations().getCurrentUserProfile();
     }
+    
+    /**
+     * Method getUnsecureRestTemplate.
+     * @return RestTemplate
+     */
+    public RestTemplate getUnsecureRestTemplate() {
+        return unsecureRestTemplate;
+    }
 
-    public AbusesOperations abusesOperations() {
+    /**
+     * Method abusesOperations.
+     * @return AbusesOperations<AbusesTemplate>
+     * @see org.springframework.social.nk.api.Nk#abusesOperations()
+     */
+    public AbusesOperations<AbusesTemplate> abusesOperations() {
         return this.abusesOperations;
     }
 
+    /**
+     * Method activityOperations.
+     * @return ActivityOperations<ActivityTemplate>
+     * @see org.springframework.social.nk.api.Nk#activityOperations()
+     */
     public ActivityOperations<ActivityTemplate> activityOperations() {
         return this.activityOperations;
     }
 
+    /**
+     * Method albumOperations.
+     * @return AlbumOperations<AlbumTemplate>
+     * @see org.springframework.social.nk.api.Nk#albumOperations()
+     */
     public AlbumOperations<AlbumTemplate> albumOperations() {
         return this.albumOperations;
     }
 
-    public ApplicationOperations applicationOperations() {
+    /**
+     * Method applicationOperations.
+     * @return ApplicationOperations<ApplicationTemplate>
+     * @see org.springframework.social.nk.api.Nk#applicationOperations()
+     */
+    public ApplicationOperations<ApplicationTemplate> applicationOperations() {
         return this.applicationOperations;
     }
 
-    public CommentOperations commentOperations() {
+    /**
+     * Method commentOperations.
+     * @return CommentOperations<CommentTemplate>
+     * @see org.springframework.social.nk.api.Nk#commentOperations()
+     */
+    public CommentOperations<CommentTemplate> commentOperations() {
         return this.commentOperations;
     }
 
-    public GiftOperations giftOperations() {
+    /**
+     * Method giftOperations.
+     * @return GiftOperations<GiftTemplate>
+     * @see org.springframework.social.nk.api.Nk#giftOperations()
+     */
+    public GiftOperations<GiftTemplate> giftOperations() {
         return this.giftOperations;
     }
 
-    public GroupOperations groupOperations() {
+    /**
+     * Method groupOperations.
+     * @return GroupOperations<GroupTemplate>
+     * @see org.springframework.social.nk.api.Nk#groupOperations()
+     */
+    public GroupOperations<GroupTemplate> groupOperations() {
         return this.groupOperations;
     }
 
+    /**
+     * Method mediaItemOperations.
+     * @return MediaItemOperations<MediaItemTemplate>
+     * @see org.springframework.social.nk.api.Nk#mediaItemOperations()
+     */
     public MediaItemOperations<MediaItemTemplate> mediaItemOperations() {
         return this.mediaItemOperations;
     }
 
-    public MessageOperations messageOperations() {
+    /**
+     * Method messageOperations.
+     * @return MessageOperations<MessageTemplate>
+     * @see org.springframework.social.nk.api.Nk#messageOperations()
+     */
+    public MessageOperations<MessageTemplate> messageOperations() {
         return this.messageOperations;
     }
 
-    public PaymentOperations paymentOperations() {
+    /**
+     * Method paymentOperations.
+     * @return PaymentOperations<PaymentTemplate>
+     * @see org.springframework.social.nk.api.Nk#paymentOperations()
+     */
+    public PaymentOperations<PaymentTemplate> paymentOperations() {
         return this.paymentOperations;
     }
 
+    /**
+     * Method peopleOperations.
+     * @return PeopleOperations<PeopleTemplate>
+     * @see org.springframework.social.nk.api.Nk#peopleOperations()
+     */
     public PeopleOperations<PeopleTemplate> peopleOperations() {
         return this.peopleOperations;
     }
 
-    public RateOperations rateOperations() {
+    /**
+     * Method rateOperations.
+     * @return RateOperations<RateTemplate>
+     * @see org.springframework.social.nk.api.Nk#rateOperations()
+     */
+    public RateOperations<RateTemplate> rateOperations() {
         return this.rateOperations;
     }
 
-    public RecommendOperations recommendOperations() {
+    /**
+     * Method recommendOperations.
+     * @return RecommendOperations<RecommendTemplate>
+     * @see org.springframework.social.nk.api.Nk#recommendOperations()
+     */
+    public RecommendOperations<RecommendTemplate> recommendOperations() {
         return this.recommendOperations;
     }
 
+    /**
+     * Method publicOperations.
+     * @return PublicOperations
+     * @see org.springframework.social.nk.api.Nk#publicOperations()
+     */
     public PublicOperations publicOperations() {
         return this.publicOperations;
     }
 
+    /**
+     * Method getJsonMessageConverter.
+     * @return MappingJacksonHttpMessageConverter
+     */
     @Override
     protected MappingJacksonHttpMessageConverter getJsonMessageConverter() {
-        MappingJacksonHttpMessageConverter converter = new TypeReferenceJacksonMessageConverter(this.oauthConsumerSupport);
+        MappingJacksonHttpMessageConverter converter = new NkJacksonMessageConverter(this.oauthConsumerSupport);
         converter.getObjectMapper().registerModule(new NkModule());
         return converter;
     }
     
+    /**
+     * Method getFormMessageConverter.
+     * @return FormHttpMessageConverter
+     */
     @Override
     protected FormHttpMessageConverter getFormMessageConverter() {
         FormHttpMessageConverter converter = new NkFormHttpMessageConverter(oauthConsumerSupport);
@@ -145,13 +301,19 @@ public class NkTemplate extends AbstractOAuth2ApiBinding implements Nk {
         converter.addPartConverter(getJsonMessageConverter());
         return converter;
     }
-
+    
+    /**
+     * Method requireAuthorization.
+     */
     protected void requireAuthorization() {
         if (!isAuthorized()) {
             throw new MissingAuthorizationException();
         }
     }
 
+    /**
+     * Method initSubApis.
+     */
     private final void initSubApis() {
         this.abusesOperations = new AbusesTemplate(getRestTemplate(), isAuthorized());
         this.activityOperations = new ActivityTemplate(getRestTemplate(), isAuthorized());
@@ -166,7 +328,7 @@ public class NkTemplate extends AbstractOAuth2ApiBinding implements Nk {
         this.peopleOperations = new PeopleTemplate(getRestTemplate(), isAuthorized());
         this.rateOperations = new RateTemplate(getRestTemplate(), isAuthorized());
         this.recommendOperations = new RecommendTemplate(getRestTemplate(), isAuthorized());
-        this.publicOperations = new PublicTemplate(getRestTemplate());
+        this.publicOperations = new PublicTemplate(getUnsecureRestTemplate());
     }
 
     /**

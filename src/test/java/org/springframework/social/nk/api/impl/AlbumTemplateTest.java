@@ -5,7 +5,7 @@ import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.social.test.client.RequestMatchers.method;
 import static org.springframework.social.test.client.RequestMatchers.requestTo;
 import static org.springframework.social.test.client.ResponseCreators.withResponse;
-import static org.springframework.social.nk.api.impl.AbstractNkTemplate.API_URL_BASE;
+import static org.springframework.social.nk.api.impl.AbstractNkTemplate.SOCIAL_REST_URL_BASE;
 
 import org.apache.shindig.protocol.RestfulCollection;
 import org.apache.shindig.social.opensocial.model.Album;
@@ -16,23 +16,34 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.social.nk.api.AlbumOperations;
 
+/**
+ */
 public class AlbumTemplateTest extends AbstractTemplateTest {
 
+    /**
+     * Field oper.
+     */
     private AlbumOperations<AlbumTemplate> oper;
 
+    /**
+     * Method setup.
+     */
     @Before
     public void setup() {
         super.setup();
         this.oper = this.nk.albumOperations();
     }
 
+    /**
+     * Method getCurrentUserAlbums.
+     */
     @Test
     public void getCurrentUserAlbums() {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.setContentType(MediaType.APPLICATION_JSON);
 
         this.mockServer
-                .expect(requestTo(API_URL_BASE + "/albums/@me/@self?startIndex=0&count=20"))
+                .expect(requestTo(SOCIAL_REST_URL_BASE + "/albums/@me/@self?startIndex=0&count=20"))
                 .andExpect(method(GET)).andRespond(withResponse(jsonResource("albums"), responseHeaders));
 
         RestfulCollection<Album> albums = this.oper.getCurrentUserAlbums();
@@ -49,25 +60,31 @@ public class AlbumTemplateTest extends AbstractTemplateTest {
 
     }
     
+    /**
+     * Method getUserAlbum.
+     */
     @Test
     public void getUserAlbum() {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.setContentType(MediaType.APPLICATION_JSON);
 
         this.mockServer
-                .expect(requestTo(API_URL_BASE + "/albums/person.123/@self?startIndex=0&count=20"))
+                .expect(requestTo(SOCIAL_REST_URL_BASE + "/albums/person.123/@self?startIndex=0&count=20"))
                 .andExpect(method(GET)).andRespond(withResponse(jsonResource("albums"), responseHeaders));
 
         this.oper.getUserAlbums("person.123");
     }
     
     // @Test
+    /**
+     * Method getGroupAlbums.
+     */
     public void getGroupAlbums() {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.setContentType(MediaType.APPLICATION_JSON);
 
         this.mockServer
-                .expect(requestTo(API_URL_BASE + "/nkalbums/nkgroup/@me/@self/group.123?startIndex=0&count=20"))
+                .expect(requestTo(SOCIAL_REST_URL_BASE + "/nkalbums/nkgroup/@me/@self/group.123?startIndex=0&count=20"))
                 .andExpect(method(GET)).andRespond(withResponse(jsonResource("albums"), responseHeaders));
 
         this.oper.getGroupAlbums("group.123");

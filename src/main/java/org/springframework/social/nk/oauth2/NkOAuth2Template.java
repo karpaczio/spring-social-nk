@@ -14,20 +14,49 @@ import org.springframework.social.oauth2.OAuth2Template;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+/**
+ */
 public class NkOAuth2Template extends OAuth2Template {
 
+    /**
+     * Field LOGGER.
+     */
     private static final XLogger LOGGER = XLoggerFactory.getXLogger(NkOAuth2Template.class);
 
+    /**
+     * Field clientId.
+     */
     private final String clientId;
 
+    /**
+     * Field clientSecret.
+     */
     private final String clientSecret;
 
+    /**
+     * Field accessTokenUrl.
+     */
     private final String accessTokenUrl;
 
+    /**
+     * Constructor for NkOAuth2Template.
+     * @param clientId String
+     * @param clientSecret String
+     * @param authorizeUrl String
+     * @param accessTokenUrl String
+     */
     public NkOAuth2Template(String clientId, String clientSecret, String authorizeUrl, String accessTokenUrl) {
         this(clientId, clientSecret, authorizeUrl, null, accessTokenUrl);
     }
 
+    /**
+     * Constructor for NkOAuth2Template.
+     * @param clientId String
+     * @param clientSecret String
+     * @param authorizeUrl String
+     * @param authenticateUrl String
+     * @param accessTokenUrl String
+     */
     public NkOAuth2Template(String clientId, String clientSecret, String authorizeUrl, String authenticateUrl,
             String accessTokenUrl) {
 
@@ -38,6 +67,15 @@ public class NkOAuth2Template extends OAuth2Template {
 
     }
 
+    /**
+     * Method exchangeForAccess.
+     * @param authorizationCode String
+     * @param redirectUri String
+     * @param additionalParameters MultiValueMap<String,String>
+     * @return AccessGrant
+     * @see org.springframework.social.oauth2.OAuth2Operations#exchangeForAccess(String, String, MultiValueMap<String,String>)
+     */
+    @SuppressWarnings("javadoc")
     @Override
     public AccessGrant exchangeForAccess(String authorizationCode, String redirectUri,
             MultiValueMap<String, String> additionalParameters) {
@@ -54,11 +92,23 @@ public class NkOAuth2Template extends OAuth2Template {
         return getForAccessGrant(buildUrl(this.accessTokenUrl, params), new LinkedMultiValueMap<String, String>());
     }
 
+    /**
+     * Method getForAccessGrant.
+     * @param accessTokenUrl String
+     * @param parameters MultiValueMap<String,String>
+     * @return AccessGrant
+     */
     @SuppressWarnings("unchecked")
     protected AccessGrant getForAccessGrant(String accessTokenUrl, MultiValueMap<String, String> parameters) {
         return extractAccessGrant(getRestTemplate().getForObject(accessTokenUrl, Map.class, parameters));
     }
 
+    /**
+     * Method buildUrl.
+     * @param url String
+     * @param parameters MultiValueMap<String,String>
+     * @return String
+     */
     private String buildUrl(String url, MultiValueMap<String, String> parameters) {
         StringBuilder urlBuilder = new StringBuilder(url);
         for (Iterator<Entry<String, List<String>>> additionalParams = parameters.entrySet().iterator(); additionalParams
@@ -76,6 +126,11 @@ public class NkOAuth2Template extends OAuth2Template {
         return urlBuilder.toString();
     }
 
+    /**
+     * Method formEncode.
+     * @param data String
+     * @return String
+     */
     private String formEncode(String data) {
         try {
             return URLEncoder.encode(data, "UTF-8");
@@ -85,11 +140,22 @@ public class NkOAuth2Template extends OAuth2Template {
         }
     }
 
+    /**
+     * Method extractAccessGrant.
+     * @param result Map<String,Object>
+     * @return AccessGrant
+     */
     private AccessGrant extractAccessGrant(Map<String, Object> result) {
         return createAccessGrant((String) result.get("access_token"), (String) result.get("scope"),
                 (String) result.get("refresh_token"), getIntegerValue(result, "expires_in"), result);
     }
 
+    /**
+     * Method getIntegerValue.
+     * @param map Map<String,Object>
+     * @param key String
+     * @return Integer
+     */
     private Integer getIntegerValue(Map<String, Object> map, String key) {
         try {
             return Integer.valueOf(String.valueOf(map.get(key)));

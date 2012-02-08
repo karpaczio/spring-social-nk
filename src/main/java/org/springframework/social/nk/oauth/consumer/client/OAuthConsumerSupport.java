@@ -1,6 +1,7 @@
 package org.springframework.social.nk.oauth.consumer.client;
 
 import static org.springframework.security.oauth.common.OAuthConsumerParameter.oauth_consumer_key;
+
 import static org.springframework.security.oauth.common.OAuthConsumerParameter.oauth_nonce;
 import static org.springframework.security.oauth.common.OAuthConsumerParameter.oauth_signature;
 import static org.springframework.security.oauth.common.OAuthConsumerParameter.oauth_signature_method;
@@ -23,8 +24,23 @@ import org.springframework.security.oauth.consumer.OAuthRequestFailedException;
 import org.springframework.security.oauth.consumer.ProtectedResourceDetails;
 import org.springframework.security.oauth.consumer.client.CoreOAuthConsumerSupport;
 
+/**
+ * Splits collection of oauth parameters to several functions.
+ * @author luruski
+ *
+ * @version $Revision: 1.0 $
+ */
 public class OAuthConsumerSupport extends CoreOAuthConsumerSupport {
 
+    /**
+     * Method loadOAuthParameters.
+     * @param details ProtectedResourceDetails
+     * @param requestURL URL
+     * @param requestToken OAuthConsumerToken
+     * @param httpMethod String
+     * @param additionalParameters Map<String,String>
+     * @return Map<String,Set<CharSequence>>
+     */
     @Override
     protected Map<String, Set<CharSequence>> loadOAuthParameters(ProtectedResourceDetails details, URL requestURL,
             OAuthConsumerToken requestToken, String httpMethod, Map<String, String> additionalParameters) {
@@ -47,6 +63,14 @@ public class OAuthConsumerSupport extends CoreOAuthConsumerSupport {
         return oauthParameters;
     }
 
+    /**
+     * Method getOAuthParameters.
+     * @param details ProtectedResourceDetails
+     * @param requestURL URL
+     * @param requestToken OAuthConsumerToken
+     * @param additionalParameters Map<String,String>
+     * @return Map<String,Set<CharSequence>>
+     */
     protected Map<String, Set<CharSequence>> getOAuthParameters(ProtectedResourceDetails details, URL requestURL,
             OAuthConsumerToken requestToken, Map<String, String> additionalParameters) {
         Map<String, Set<CharSequence>> oauthParams = new TreeMap<String, Set<CharSequence>>();
@@ -69,6 +93,11 @@ public class OAuthConsumerSupport extends CoreOAuthConsumerSupport {
         return oauthParams;
     }
 
+    /**
+     * Method getOAuthParametersFromAdditionalParameters.
+     * @param additionalParameters Map<String,String>
+     * @return Map<String,Set<CharSequence>>
+     */
     protected Map<String, Set<CharSequence>> getOAuthParametersFromAdditionalParameters(
             Map<String, String> additionalParameters) {
         Map<String, Set<CharSequence>> oauthParams = new TreeMap<String, Set<CharSequence>>();
@@ -87,6 +116,11 @@ public class OAuthConsumerSupport extends CoreOAuthConsumerSupport {
         return oauthParams;
     }
 
+    /**
+     * Method getOAuthParametersFromQuery.
+     * @param requestURL URL
+     * @return Map<String,Set<CharSequence>>
+     */
     protected Map<String, Set<CharSequence>> getOAuthParametersFromQuery(URL requestURL) {
         Map<String, Set<CharSequence>> oauthParams = new TreeMap<String, Set<CharSequence>>();
         String query = requestURL.getQuery();
@@ -116,6 +150,13 @@ public class OAuthConsumerSupport extends CoreOAuthConsumerSupport {
         return oauthParams;
     }
     
+    /**
+     * Method getExtraOAuthParameters.
+     * @param details ProtectedResourceDetails
+     * @param requestURL URL
+     * @param requestToken OAuthConsumerToken
+     * @return Map<String,Set<CharSequence>>
+     */
     protected Map<String, Set<CharSequence>> getExtraOAuthParameters(ProtectedResourceDetails details, URL requestURL,
             OAuthConsumerToken requestToken) {
         return Collections.emptyMap();

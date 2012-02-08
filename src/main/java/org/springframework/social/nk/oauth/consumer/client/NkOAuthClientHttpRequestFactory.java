@@ -7,21 +7,36 @@ import java.util.Map;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.client.ClientHttpRequest;
 import org.springframework.http.client.ClientHttpRequestFactory;
-import org.springframework.security.oauth.consumer.AccessTokenRequiredException;
 import org.springframework.security.oauth.consumer.OAuthConsumerSupport;
 import org.springframework.security.oauth.consumer.OAuthConsumerToken;
-import org.springframework.security.oauth.consumer.OAuthSecurityContext;
-import org.springframework.security.oauth.consumer.OAuthSecurityContextHolder;
 import org.springframework.security.oauth.consumer.ProtectedResourceDetails;
 import org.springframework.security.oauth.consumer.client.OAuthClientHttpRequestFactory;
 import org.springframework.social.nk.oauth.common.NkOAuthConsumerParameter;
+import org.springframework.social.nk.util.AccessTokenUtil;
 
+/**
+ */
 public class NkOAuthClientHttpRequestFactory extends OAuthClientHttpRequestFactory {
 
+    /**
+     * Field delegate.
+     */
     private final ClientHttpRequestFactory delegate;
+    /**
+     * Field resource.
+     */
     private final ProtectedResourceDetails resource;
+    /**
+     * Field support.
+     */
     private final OAuthConsumerSupport support;
 
+    /**
+     * Constructor for NkOAuthClientHttpRequestFactory.
+     * @param delegate ClientHttpRequestFactory
+     * @param resource ProtectedResourceDetails
+     * @param support OAuthConsumerSupport
+     */
     public NkOAuthClientHttpRequestFactory(ClientHttpRequestFactory delegate, ProtectedResourceDetails resource,
             OAuthConsumerSupport support) {
         super(delegate, resource, support);
@@ -30,23 +45,19 @@ public class NkOAuthClientHttpRequestFactory extends OAuthClientHttpRequestFacto
         this.support = support;
     }
 
+    /**
+     * Method createRequest.
+     * @param uri URI
+     * @param httpMethod HttpMethod
+     * @return ClientHttpRequest
+     * @throws IOException
+     * @see org.springframework.http.client.ClientHttpRequestFactory#createRequest(URI, HttpMethod)
+     */
     @Override
     public ClientHttpRequest createRequest(URI uri, HttpMethod httpMethod) throws IOException {
 
-        OAuthSecurityContext context = OAuthSecurityContextHolder.getContext();
-        if (context == null) {
-            throw new IllegalStateException(
-                    "No OAuth security context has been established. Unable to access resource '"
-                            + this.resource.getId() + "'.");
-        }
 
-        Map<String, OAuthConsumerToken> accessTokens = context.getAccessTokens();
-        OAuthConsumerToken accessToken = accessTokens == null ? null : accessTokens.get(this.resource.getId());
-        if (accessToken == null) {
-            throw new AccessTokenRequiredException(
-                    "No OAuth security context has been established. Unable to access resource '"
-                            + this.resource.getId() + "'.", this.resource);
-        }
+        OAuthConsumerToken accessToken = AccessTokenUtil.getAccessToken(resource);
 
         boolean useAuthHeader = this.resource.isAcceptsAuthorizationHeader();
         if (!useAuthHeader) {
@@ -74,6 +85,12 @@ public class NkOAuthClientHttpRequestFactory extends OAuthClientHttpRequestFacto
         return req;
     }
 
+    /**
+     * Method addNkToken.
+     * @param uri URI
+     * @param requestToken OAuthConsumerToken
+     * @return URI
+     */
     private URI addNkToken(URI uri, OAuthConsumerToken requestToken) {
         if ((requestToken != null) && (requestToken.getValue() != null)) {
             String uriValue = String.valueOf(uri);

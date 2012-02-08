@@ -2,7 +2,9 @@ package org.springframework.social.nk.oauth.consumer.client;
 
 import static org.springframework.social.nk.oauth.common.NkOAuthConsumerParameter.oauth_body_hash;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.URL;
 import java.util.Collections;
 import java.util.Map;
@@ -13,25 +15,57 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.http.HttpOutputMessage;
 import org.springframework.http.HttpRequest;
-import org.springframework.security.oauth.consumer.AccessTokenRequiredException;
 import org.springframework.security.oauth.consumer.OAuthConsumerToken;
-import org.springframework.security.oauth.consumer.OAuthSecurityContext;
-import org.springframework.security.oauth.consumer.OAuthSecurityContextHolder;
 import org.springframework.security.oauth.consumer.ProtectedResourceDetails;
+import org.springframework.social.nk.util.AccessTokenUtil;
 
+/**
+ */
 public class NkCoreOAuthConsumerSupport extends OAuthConsumerSupport {
 
+    /**
+     * Field oauthBodyHash.
+     */
     private String oauthBodyHash;
+    /**
+     * Field resource.
+     */
     private final ProtectedResourceDetails resource;
 
+    /**
+     * Constructor for NkCoreOAuthConsumerSupport.
+     * 
+     * @param resource
+     *            ProtectedResourceDetails
+     */
     public NkCoreOAuthConsumerSupport(ProtectedResourceDetails resource) {
         this.resource = resource;
     }
 
-    public void setOAuthBodyHash(byte[] bodyAsBytes) {
-        oauthBodyHash = new String(Base64.encodeBase64(DigestUtils.sha(bodyAsBytes)));
+    /**
+     * Method setOAuthBodyHash.
+     * 
+     * @param out
+     *            OutputStream
+     */
+    public void setOAuthBodyHash(OutputStream out) {
+        if (out instanceof ByteArrayOutputStream) {
+            ByteArrayOutputStream byteOut = (ByteArrayOutputStream) out;
+            oauthBodyHash = new String(Base64.encodeBase64(DigestUtils.sha(byteOut.toByteArray())));
+        }
     }
 
+    /**
+     * Method getExtraOAuthParameters.
+     * 
+     * @param details
+     *            ProtectedResourceDetails
+     * @param requestURL
+     *            URL
+     * @param requestToken
+     *            OAuthConsumerToken
+     * @return Map<String,Set<CharSequence>>
+     */
     @Override
     protected Map<String, Set<CharSequence>> getExtraOAuthParameters(ProtectedResourceDetails details, URL requestURL,
             OAuthConsumerToken requestToken) {
@@ -43,27 +77,20 @@ public class NkCoreOAuthConsumerSupport extends OAuthConsumerSupport {
         return oauthParams;
     }
 
+    /**
+     * Method addAuthorizationHeader.
+     * 
+     * @param outputMessage
+     *            HttpOutputMessage
+     * @throws IOException
+     */
     public void addAuthorizationHeader(HttpOutputMessage outputMessage) throws IOException {
 
-        OAuthSecurityContext context = OAuthSecurityContextHolder.getContext();
-        if (context == null) {
-            throw new IllegalStateException(
-                    "No OAuth security context has been established. Unable to access resource '"
-                            + this.resource.getId() + "'.");
-        }
-
-        Map<String, OAuthConsumerToken> accessTokens = context.getAccessTokens();
-        OAuthConsumerToken accessToken = accessTokens == null ? null : accessTokens.get(this.resource.getId());
-        if (accessToken == null) {
-            throw new AccessTokenRequiredException(
-                    "No OAuth security context has been established. Unable to access resource '"
-                            + this.resource.getId() + "'.", resource);
-        }
+        OAuthConsumerToken accessToken = AccessTokenUtil.getAccessToken(resource);
 
         if (HttpRequest.class.isAssignableFrom(outputMessage.getClass())) {
             HttpRequest req = (HttpRequest) outputMessage;
 
-            // Are we loosing some info right now ?
             URL url = new URL(req.getURI().toString());
             String httpMethod = req.getMethod().toString();
 

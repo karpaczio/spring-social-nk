@@ -19,21 +19,50 @@ import org.springframework.web.client.RestTemplate;
 import pl.nk.opensocial.model.ApplicationMediaItem;
 import pl.nk.opensocial.model.ApplicationMediaItemImpl;
 
+/**
+ */
 public class MediaItemTemplate extends AbstractNkTemplate<MediaItemTemplate> implements
         MediaItemOperations<MediaItemTemplate> {
 
+    /**
+     * Constructor for MediaItemTemplate.
+     * @param restTemplate RestTemplate
+     * @param isAuthorized boolean
+     */
     public MediaItemTemplate(RestTemplate restTemplate, boolean isAuthorized) {
         super(restTemplate, isAuthorized);
     }
 
+    /**
+     * Method getCurrentUserPhotos.
+     * @param albumId String
+     * @return RestfulCollection<ApplicationMediaItem>
+     * @see org.springframework.social.nk.api.MediaItemOperations#getCurrentUserPhotos(String)
+     */
     public RestfulCollection<ApplicationMediaItem> getCurrentUserPhotos(String albumId) {
         return getWithFieldsCountStartIndex("/mediaItems/@me/@self/" + albumId, MEDIA_ITEMS_TYPE_REFERENCE);
     }
 
+    /**
+     * Method getUserPhotos.
+     * @param personId String
+     * @param albumId String
+     * @return RestfulCollection<ApplicationMediaItem>
+     * @see org.springframework.social.nk.api.MediaItemOperations#getUserPhotos(String, String)
+     */
     public RestfulCollection<ApplicationMediaItem> getUserPhotos(String personId, String albumId) {
         return getWithFieldsCountStartIndex("/mediaItems/" + personId + "/@self/" + albumId, MEDIA_ITEMS_TYPE_REFERENCE);
     }
 
+    /**
+     * Method addCurrentUserPhoto.
+     * @param albumId String
+     * @param in InputStream
+     * @param mimeType String
+     * @param description String
+     * @return ApplicationMediaItem
+     * @see org.springframework.social.nk.api.MediaItemOperations#addCurrentUserPhoto(String, InputStream, String, String)
+     */
     public ApplicationMediaItem addCurrentUserPhoto(String albumId, InputStream in, String mimeType, String description) {
 
         try {
@@ -51,12 +80,24 @@ public class MediaItemTemplate extends AbstractNkTemplate<MediaItemTemplate> imp
         }
     }
 
+    /**
+     * Method getRequest.
+     * @param description String
+     * @return HttpEntity<ApplicationMediaItem>
+     */
     private HttpEntity<ApplicationMediaItem> getRequest(String description) {
         ApplicationMediaItem request = new ApplicationMediaItemImpl();
         request.setDescription(description);
         return new HttpEntity<ApplicationMediaItem>(request, APPLICATION_JSON_CONTENT_TYPE);
     }
 
+    /**
+     * Method getPhoto.
+     * @param in InputStream
+     * @param mimeType String
+     * @return HttpEntity<?>
+     * @throws IOException
+     */
     @SuppressWarnings({ "rawtypes", "unchecked" })
     private HttpEntity<?> getPhoto(InputStream in, String mimeType) throws IOException {
         byte[] photoBytes = IOUtils.toByteArray(in);

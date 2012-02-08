@@ -1,5 +1,13 @@
 package org.springframework.social.nk.oauth.common;
 
+/**
+ */
 public enum NkOAuthConsumerParameter {
-    nk_token, oauth_body_hash
+    /**
+     * Field nk_token.
+     */
+    nk_token, /**
+  * Field oauth_body_hash.
+  */
+ oauth_body_hash
 }

@@ -1,32 +1,61 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.springframework.social</groupId>
 	<artifactId>spring-social-nk</artifactId>
+	<packaging>jar</packaging>
+	<name>spring-social-nk</name>
 	<version>0.0.1-SNAPSHOT</version>
-
+	<description>Binding and connection support for Nk Api.</description>
+	<url>https://github.com/karpaczio/spring-social-nk</url>
+	<licenses>
+		<license>
+			<name>GNU General Public License v3.0</name>
+			<url>http://www.gnu.org/licenses/gpl-3.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<scm>
+		<url>https://github.com/karpaczio/spring-social-nk</url>
+		<connection>scm:git:git://github.com/karpaczio/spring-social-nk.git</connection>
+		<developerConnection>scm:git:git://github.com/karpaczio/spring-social-nk.git</developerConnection>
+	</scm>
+	<developers>
+		<developer>
+			<id>luruski</id>
+			<name>Łukasz Uruski</name>
+			<email>lukasz.uruski@nasza-klasa.pl</email>
+			<organization>Nasza Klasa sp. z o.o.</organization>
+			<organizationUrl>http://nk.pl</organizationUrl>
+			<roles>
+				<role>architect</role>
+				<role>developer</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
+	</developers>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-		<commons-lang.version>2.6</commons-lang.version>
-		<commons-io.version>2.1</commons-io.version>
-		<commons-codec.version>1.6</commons-codec.version>
-		<jackson.version>1.9.2</jackson.version>
-		<log4j.version>1.2.16</log4j.version>
-		<nk-model.version>1.33.5-SNAPSHOT</nk-model.version>
-		<shindig.version>2.0.2.3-SNAPSHOT</shindig.version>
-		<slf4j.version>1.5.11</slf4j.version>
-		<spring-social.version>1.0.1.RELEASE</spring-social.version>
-		<spring.version>3.1.0.RELEASE</spring.version>
-		<spring-security-oauth.version>1.0.0.M4</spring-security-oauth.version>
-		<spring-security-oauth2.version>1.0.0.BUILD-SNAPSHOT</spring-security-oauth2.version>
-		
-		<junit.version>4.10</junit.version>
-		<mockito.version>1.9.0</mockito.version>
+		<org.apache.maven.plugins.maven-compiler-plugin.version>2.3.2</org.apache.maven.plugins.maven-compiler-plugin.version>
+
+		<commons-codec.commons-codec.version>1.6</commons-codec.commons-codec.version>
+		<commons-io.commons-io.version>2.1</commons-io.commons-io.version>
+		<commons-lang.commons-lang.version>2.6</commons-lang.commons-lang.version>
+		<log4j.log4j.version>1.2.16</log4j.log4j.version>
+		<org.codehaus.jackson.jackson-mapper-asl.version>1.9.2</org.codehaus.jackson.jackson-mapper-asl.version>
+		<org.slf4j.version>1.5.11</org.slf4j.version>
+		<org.springframework.security.oauth.spring-security-oauth.version>1.0.0.M4</org.springframework.security.oauth.spring-security-oauth.version>
+		<org.springframework.security.oauth.spring-security-oauth2.version>1.0.0.BUILD-SNAPSHOT</org.springframework.security.oauth.spring-security-oauth2.version>
+		<org.springframework.social.spring-social-core.version>1.0.1.RELEASE</org.springframework.social.spring-social-core.version>
+		<org.springframework.version>3.1.0.RELEASE</org.springframework.version>
+		<pl.nk.nk-ext-model.version>0.0.1-SNAPSHOT</pl.nk.nk-ext-model.version>
+
+		<junit.junit.version>4.10</junit.junit.version>
+		<org.mockito.mockito-all.version>1.9.0</org.mockito.mockito-all.version>
 	</properties>
-	
+
 	<repositories>
 		<repository>
 			<id>spring-snapshot</id>
@@ -34,103 +63,103 @@
 			<url>http://s3.amazonaws.com/maven.springframework.org/snapshot</url>
 		</repository>
 	</repositories>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.social</groupId>
 			<artifactId>spring-social-core</artifactId>
-			<version>${spring-social.version}</version>
+			<version>${org.springframework.social.spring-social-core.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
-			<version>${jackson.version}</version>
+			<version>${org.codehaus.jackson.jackson-mapper-asl.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
-			<version>${commons-lang.version}</version>
+			<version>${commons-lang.commons-lang.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
-			<version>${commons-io.version}</version>
+			<version>${commons-io.commons-io.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
-			<version>${commons-codec.version}</version>
+			<version>${commons-codec.commons-codec.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>pl.nk</groupId>
-			<artifactId>nk-model</artifactId>
-			<version>${nk-model.version}</version>
+			<artifactId>nk-ext-model</artifactId>
+			<version>${pl.nk.nk-ext-model.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j.version}</version>
+			<version>${org.slf4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-ext</artifactId>
-			<version>${slf4j.version}</version>
+			<version>${org.slf4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
-			<version>${slf4j.version}</version>
+			<version>${org.slf4j.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
-			<version>${log4j.version}</version>
+			<version>${log4j.log4j.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>
-			<version>${slf4j.version}</version>
+			<version>${org.slf4j.version}</version>
 		</dependency>
 
 		<!-- Test dependencies -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
-			<version>${spring.version}</version>
+			<version>${org.springframework.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.social</groupId>
 			<artifactId>spring-social-test</artifactId>
-			<version>${spring-social.version}</version>
+			<version>${org.springframework.social.spring-social-core.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-	 		<groupId>org.springframework.security.oauth</groupId>
+			<groupId>org.springframework.security.oauth</groupId>
 			<artifactId>spring-security-oauth</artifactId>
-			<version>${spring-security-oauth.version}</version>
+			<version>${org.springframework.security.oauth.spring-security-oauth.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security.oauth</groupId>
 			<artifactId>spring-security-oauth2</artifactId>
-			<version>${spring-security-oauth2.version}</version>
-		</dependency> 
+			<version>${org.springframework.security.oauth.spring-security-oauth2.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>${junit.version}</version>
+			<version>${junit.junit.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
-			<version>${mockito.version}</version>
+			<version>${org.mockito.mockito-all.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	
+
 	<build>
 		<resources>
 			<resource>
@@ -141,7 +170,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
+				<version>${org.apache.maven.plugins.maven-compiler-plugin.version}</version>
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>

@@ -6,7 +6,7 @@ import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.social.test.client.RequestMatchers.method;
 import static org.springframework.social.test.client.RequestMatchers.requestTo;
 import static org.springframework.social.test.client.ResponseCreators.withResponse;
-import static org.springframework.social.nk.api.impl.AbstractNkTemplate.API_URL_BASE;
+import static org.springframework.social.nk.api.impl.AbstractNkTemplate.SOCIAL_REST_URL_BASE;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,16 +22,27 @@ import org.springframework.social.nk.api.MediaItemOperations;
 
 import pl.nk.opensocial.model.ApplicationMediaItem;
 
+/**
+ */
 public class MediaItemTemplateTest extends AbstractTemplateTest {
 
+    /**
+     * Field oper.
+     */
     private MediaItemOperations<MediaItemTemplate> oper;
 
+    /**
+     * Method setup.
+     */
     @Before
     public void setup() {
         super.setup();
         this.oper = this.nk.mediaItemOperations();
     }
 
+    /**
+     * Method getCurrentUserPhotos.
+     */
     @Test
     public void getCurrentUserPhotos() {
 
@@ -39,7 +50,7 @@ public class MediaItemTemplateTest extends AbstractTemplateTest {
         responseHeaders.setContentType(MediaType.APPLICATION_JSON);
 
         this.mockServer
-                .expect(requestTo(API_URL_BASE + "/mediaItems/@me/@self/album.1?startIndex=0&count=20"))
+                .expect(requestTo(SOCIAL_REST_URL_BASE + "/mediaItems/@me/@self/album.1?startIndex=0&count=20"))
                 .andExpect(method(GET)).andRespond(withResponse(jsonResource("mediaitems"), responseHeaders));
 
         RestfulCollection<ApplicationMediaItem> mediaItems = this.oper.getCurrentUserPhotos("album.1");
@@ -61,6 +72,10 @@ public class MediaItemTemplateTest extends AbstractTemplateTest {
         assertEquals(Long.valueOf(1306926434000L), mediaItem.getNkCreatedTime());
     }
     
+    /**
+     * Method addCurrentUserPhoto.
+     * @throws Exception
+     */
     @Test
     public void addCurrentUserPhoto() throws Exception {
         
@@ -68,7 +83,7 @@ public class MediaItemTemplateTest extends AbstractTemplateTest {
         responseHeaders.setContentType(MediaType.APPLICATION_JSON);
 
         this.mockServer
-                .expect(requestTo(API_URL_BASE + "/mediaItems/@me/@self/album.1"))
+                .expect(requestTo(SOCIAL_REST_URL_BASE + "/mediaItems/@me/@self/album.1"))
                 .andExpect(method(POST)).andRespond(withResponse(jsonResource("mediaitems"), responseHeaders));
     
         File f = new File("c:\\tmp\\avatar.jpeg");

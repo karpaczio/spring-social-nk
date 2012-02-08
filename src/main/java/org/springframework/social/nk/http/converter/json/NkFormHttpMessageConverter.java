@@ -1,8 +1,6 @@
 package org.springframework.social.nk.http.converter.json;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpOutputMessage;
@@ -12,16 +10,30 @@ import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.social.nk.oauth.consumer.client.NkCoreOAuthConsumerSupport;
 import org.springframework.util.MultiValueMap;
 
+/**
+ */
 public class NkFormHttpMessageConverter extends FormHttpMessageConverter {
 
+    /**
+     * Field oauthConsumerSupport.
+     */
     private final NkCoreOAuthConsumerSupport oauthConsumerSupport;
 
+    /**
+     * Constructor for NkFormHttpMessageConverter.
+     * @param oauthConsumerSupport NkCoreOAuthConsumerSupport
+     */
     public NkFormHttpMessageConverter(NkCoreOAuthConsumerSupport oauthConsumerSupport) {
         this.oauthConsumerSupport = oauthConsumerSupport;
     }
 
     /**
      * Nk requires oauth_body_hash in every POST and PUT request.
+     * @param map MultiValueMap<String,?>
+     * @param contentType MediaType
+     * @param outputMessage HttpOutputMessage
+     * @throws IOException
+     * @throws HttpMessageNotWritableException
      */
     @Override
     public void write(MultiValueMap<String, ?> map, MediaType contentType, HttpOutputMessage outputMessage)
@@ -29,16 +41,16 @@ public class NkFormHttpMessageConverter extends FormHttpMessageConverter {
         super.write(map, contentType, outputMessage);
 
         if (isMultipart(map, contentType)) {
-            OutputStream out = outputMessage.getBody();
-            ByteArrayOutputStream byteOut = (ByteArrayOutputStream) out;
-
-            this.oauthConsumerSupport.setOAuthBodyHash(byteOut.toByteArray());
+            this.oauthConsumerSupport.setOAuthBodyHash(outputMessage.getBody());
             this.oauthConsumerSupport.addAuthorizationHeader(outputMessage);
         }
     }
 
     /**
      * Private method in subclass.
+     * @param map MultiValueMap<String,?>
+     * @param contentType MediaType
+     * @return boolean
      */
     protected boolean isMultipart(MultiValueMap<String, ?> map, MediaType contentType) {
         if (contentType != null) {
@@ -53,9 +65,11 @@ public class NkFormHttpMessageConverter extends FormHttpMessageConverter {
         }
         return false;
     }
-    
+
     /**
-     * Nk requires filename or it will not recognize it as photo.
+     * Nk requires filename or will not recognize photo in multipart request.
+     * @param part Object
+     * @return String
      */
     @Override
     protected String getFilename(Object part) {
@@ -63,7 +77,7 @@ public class NkFormHttpMessageConverter extends FormHttpMessageConverter {
             Resource resource = (Resource) part;
             return resource.getFilename();
         } else if (part instanceof byte[]) {
-            return ""; 
+            return "";
         } else {
             return null;
         }
