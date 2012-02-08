@@ -16,6 +16,8 @@ import org.apache.shindig.protocol.RestfulCollection;
 import org.apache.shindig.social.opensocial.model.MediaItem;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.social.nk.api.MediaItemOperations;
@@ -86,9 +88,8 @@ public class MediaItemTemplateTest extends AbstractTemplateTest {
                 .expect(requestTo(SOCIAL_REST_URL_BASE + "/mediaItems/@me/@self/album.1"))
                 .andExpect(method(POST)).andRespond(withResponse(jsonResource("mediaitems"), responseHeaders));
     
-        File f = new File("c:\\tmp\\avatar.jpeg");
-        InputStream in = new FileInputStream(f);
-        this.oper.addCurrentUserPhoto("album.1", in, "image/jpg", "some description");
+        Resource res = new ClassPathResource("/avatar.jpeg");
+        this.oper.addCurrentUserPhoto("album.1", res.getInputStream(), "image/jpg", "some description");
         
     }
 }
