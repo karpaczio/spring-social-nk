@@ -1,6 +1,10 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
 	<groupId>org.springframework.social</groupId>
 	<artifactId>spring-social-nk</artifactId>
 	<packaging>jar</packaging>
@@ -16,9 +20,9 @@
 		</license>
 	</licenses>
 	<scm>
-		<url>https://github.com/karpaczio/spring-social-nk</url>
-		<connection>scm:git:git://github.com/karpaczio/spring-social-nk.git</connection>
-		<developerConnection>scm:git:git://github.com/karpaczio/spring-social-nk.git</developerConnection>
+		<connection>scm:git:git@github.com:karpaczio/spring-social-nk.git</connection>
+		<developerConnection>scm:git:git@github.com:karpaczio/spring-social-nk.git</developerConnection>
+		<url>git@github.com:karpaczio/spring-social-nk</url>
 	</scm>
 	<developers>
 		<developer>
@@ -44,25 +48,24 @@
 		<commons-io.commons-io.version>2.1</commons-io.commons-io.version>
 		<commons-lang.commons-lang.version>2.6</commons-lang.commons-lang.version>
 		<log4j.log4j.version>1.2.16</log4j.log4j.version>
-		<org.codehaus.jackson.jackson-mapper-asl.version>1.9.2</org.codehaus.jackson.jackson-mapper-asl.version>
+		<org.codehaus.jackson.jackson-mapper-asl.version>1.9.4</org.codehaus.jackson.jackson-mapper-asl.version>
 		<org.slf4j.version>1.5.11</org.slf4j.version>
 		<org.springframework.security.oauth.spring-security-oauth.version>1.0.0.M4</org.springframework.security.oauth.spring-security-oauth.version>
-		<org.springframework.security.oauth.spring-security-oauth2.version>1.0.0.BUILD-SNAPSHOT</org.springframework.security.oauth.spring-security-oauth2.version>
-		<org.springframework.social.spring-social-core.version>1.0.1.RELEASE</org.springframework.social.spring-social-core.version>
+		<org.springframework.social.spring-social-core.version>1.0.2.RELEASE</org.springframework.social.spring-social-core.version>
 		<org.springframework.version>3.1.0.RELEASE</org.springframework.version>
-		<pl.nk.nk-ext-model.version>0.0.1-SNAPSHOT</pl.nk.nk-ext-model.version>
+		<pl.nk.nk-ext-model.version>1.0.0</pl.nk.nk-ext-model.version>
 
 		<junit.junit.version>4.10</junit.junit.version>
 		<org.mockito.mockito-all.version>1.9.0</org.mockito.mockito-all.version>
 	</properties>
 
-	<repositories>
+	<!-- repositories>
 		<repository>
 			<id>spring-snapshot</id>
 			<name>Spring Framework Snapshot Repository</name>
 			<url>http://s3.amazonaws.com/maven.springframework.org/snapshot</url>
 		</repository>
-	</repositories>
+	</repositories -->
 
 	<dependencies>
 		<dependency>
@@ -140,11 +143,6 @@
 			<groupId>org.springframework.security.oauth</groupId>
 			<artifactId>spring-security-oauth</artifactId>
 			<version>${org.springframework.security.oauth.spring-security-oauth.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security.oauth</groupId>
-			<artifactId>spring-security-oauth2</artifactId>
-			<version>${org.springframework.security.oauth.spring-security-oauth2.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
