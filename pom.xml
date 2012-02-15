@@ -9,7 +9,7 @@
 	<artifactId>spring-social-nk</artifactId>
 	<packaging>jar</packaging>
 	<name>spring-social-nk</name>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<description>Binding and connection support for Nk Api.</description>
 	<url>https://github.com/karpaczio/spring-social-nk</url>
 	<licenses>
