@@ -4,7 +4,6 @@ import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.social.test.client.RequestMatchers.method;
 import static org.springframework.social.test.client.RequestMatchers.requestTo;
 import static org.springframework.social.test.client.ResponseCreators.withResponse;
-import static pl.nk.social.api.impl.AbstractNkTemplate.SOCIAL_REST_URL_BASE;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -41,7 +40,7 @@ public class ActivityTemplateTest extends AbstractTemplateTest {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.setContentType(MediaType.APPLICATION_JSON);
 
-        this.mockServer.expect(requestTo(SOCIAL_REST_URL_BASE + "/activities/@me/@all/app.sledzik")).andExpect(method(POST))
+        this.mockServer.expect(requestTo(oper.getSocialResourceUrl() + "/activities/@me/@all/app.sledzik")).andExpect(method(POST))
                 .andRespond(withResponse("{\"entry\":{}}", responseHeaders));
 
         this.oper.addActivityForAll("some title");
@@ -57,7 +56,7 @@ public class ActivityTemplateTest extends AbstractTemplateTest {
         responseHeaders.setContentType(MediaType.APPLICATION_JSON);
 
         this.mockServer
-                .expect(requestTo(SOCIAL_REST_URL_BASE + "/activities/@me/@friends/app.sledzik"))
+                .expect(requestTo(oper.getSocialResourceUrl() + "/activities/@me/@friends/app.sledzik"))
                 .andExpect(method(POST)).andRespond(withResponse("{\"entry\":{}}", responseHeaders));
 
         this.oper.addActivityForFriends("some title");

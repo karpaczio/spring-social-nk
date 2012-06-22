@@ -29,8 +29,8 @@ public class MediaItemTemplate extends AbstractNkTemplate<MediaItemTemplate> imp
      * @param restTemplate RestTemplate
      * @param isAuthorized boolean
      */
-    public MediaItemTemplate(RestTemplate restTemplate, boolean isAuthorized) {
-        super(restTemplate, isAuthorized);
+    public MediaItemTemplate(RestTemplate restTemplate, boolean isAuthorized, String socialResourceUrl, String commonResourceUrl) {
+        super(restTemplate, isAuthorized, socialResourceUrl, commonResourceUrl);
     }
 
     /**

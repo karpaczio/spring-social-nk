@@ -20,8 +20,8 @@ public class ActivityTemplate extends AbstractNkTemplate<ActivityTemplate> imple
      * @param restTemplate RestTemplate
      * @param isAuthorized boolean
      */
-    public ActivityTemplate(RestTemplate restTemplate, boolean isAuthorized) {
-        super(restTemplate, isAuthorized);
+    public ActivityTemplate(RestTemplate restTemplate, boolean isAuthorized, String socialResourceUrl, String commonResourceUrl) {
+        super(restTemplate, isAuthorized, socialResourceUrl, commonResourceUrl);
     }
 
     /**

@@ -6,7 +6,6 @@ import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.social.test.client.RequestMatchers.method;
 import static org.springframework.social.test.client.RequestMatchers.requestTo;
 import static org.springframework.social.test.client.ResponseCreators.withResponse;
-import static pl.nk.social.api.impl.AbstractNkTemplate.SOCIAL_REST_URL_BASE;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +19,6 @@ import org.springframework.http.MediaType;
 
 import pl.nk.opensocial.model.NkPerson;
 import pl.nk.social.api.PeopleOperations;
-import pl.nk.social.api.impl.PeopleTemplate;
 
 /**
  */
@@ -48,7 +46,7 @@ public class PeopleTemplateTest extends AbstractTemplateTest {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.setContentType(MediaType.APPLICATION_JSON);
 
-        this.mockServer.expect(requestTo(SOCIAL_REST_URL_BASE + "/people/@me")).andExpect(method(GET))
+        this.mockServer.expect(requestTo(oper.getSocialResourceUrl() + "/people/@me")).andExpect(method(GET))
                 .andRespond(withResponse(jsonResource("nk-profile"), responseHeaders));
 
         NkPerson profile = this.oper.getCurrentUserProfile();
@@ -83,7 +81,7 @@ public class PeopleTemplateTest extends AbstractTemplateTest {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.setContentType(MediaType.APPLICATION_JSON);
 
-        this.mockServer.expect(requestTo(SOCIAL_REST_URL_BASE + "/people/@me/@friends?startIndex=0&count=20"))
+        this.mockServer.expect(requestTo(oper.getSocialResourceUrl() + "/people/@me/@friends?startIndex=0&count=20"))
                 .andExpect(method(GET)).andRespond(withResponse(jsonResource("friends"), responseHeaders));
         RestfulCollection<NkPerson> friends = this.oper.getCurrentUserFriends();
 
@@ -102,7 +100,7 @@ public class PeopleTemplateTest extends AbstractTemplateTest {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.setContentType(MediaType.APPLICATION_JSON);
 
-        this.mockServer.expect(requestTo(SOCIAL_REST_URL_BASE + "/people/person.abc")).andExpect(method(GET))
+        this.mockServer.expect(requestTo(oper.getSocialResourceUrl() + "/people/person.abc")).andExpect(method(GET))
                 .andRespond(withResponse(jsonResource("nk-profile"), responseHeaders));
 
         this.oper.getUserProfile("person.abc");
@@ -115,7 +113,7 @@ public class PeopleTemplateTest extends AbstractTemplateTest {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.setContentType(MediaType.APPLICATION_JSON);
 
-        this.mockServer.expect(requestTo(SOCIAL_REST_URL_BASE + "/people/person.1,person.2")).andExpect(method(GET))
+        this.mockServer.expect(requestTo(oper.getSocialResourceUrl() + "/people/person.1,person.2")).andExpect(method(GET))
                 .andRespond(withResponse(jsonResource("nk-profile"), responseHeaders));
 
         List<String> personIds = new ArrayList<String>(2);

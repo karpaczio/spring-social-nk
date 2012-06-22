@@ -107,4 +107,11 @@ public abstract class NkPersonMixIn {
     @JsonProperty("urls")
     @JsonDeserialize(as = ArrayList.class, contentAs = UrlImpl.class)
     private List<Url> urls;
+    
+    /**
+     * Field urls.
+     */
+    @JsonProperty("emails")
+    @JsonDeserialize(as = ArrayList.class, contentAs = ListFieldImpl.class)
+    private List<ListField> emails;
 }

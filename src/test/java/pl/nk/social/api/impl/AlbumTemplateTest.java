@@ -5,7 +5,6 @@ import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.social.test.client.RequestMatchers.method;
 import static org.springframework.social.test.client.RequestMatchers.requestTo;
 import static org.springframework.social.test.client.ResponseCreators.withResponse;
-import static pl.nk.social.api.impl.AbstractNkTemplate.SOCIAL_REST_URL_BASE;
 
 import org.apache.shindig.protocol.RestfulCollection;
 import org.apache.shindig.social.opensocial.model.Album;
@@ -16,7 +15,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
 import pl.nk.social.api.AlbumOperations;
-import pl.nk.social.api.impl.AlbumTemplate;
 
 /**
  */
@@ -45,7 +43,7 @@ public class AlbumTemplateTest extends AbstractTemplateTest {
         responseHeaders.setContentType(MediaType.APPLICATION_JSON);
 
         this.mockServer
-                .expect(requestTo(SOCIAL_REST_URL_BASE + "/albums/@me/@self?startIndex=0&count=20"))
+                .expect(requestTo(oper.getSocialResourceUrl() + "/albums/@me/@self?startIndex=0&count=20"))
                 .andExpect(method(GET)).andRespond(withResponse(jsonResource("albums"), responseHeaders));
 
         RestfulCollection<Album> albums = this.oper.getCurrentUserAlbums();
@@ -71,7 +69,7 @@ public class AlbumTemplateTest extends AbstractTemplateTest {
         responseHeaders.setContentType(MediaType.APPLICATION_JSON);
 
         this.mockServer
-                .expect(requestTo(SOCIAL_REST_URL_BASE + "/albums/person.123/@self?startIndex=0&count=20"))
+                .expect(requestTo(oper.getSocialResourceUrl() + "/albums/person.123/@self?startIndex=0&count=20"))
                 .andExpect(method(GET)).andRespond(withResponse(jsonResource("albums"), responseHeaders));
 
         this.oper.getUserAlbums("person.123");
@@ -86,7 +84,7 @@ public class AlbumTemplateTest extends AbstractTemplateTest {
         responseHeaders.setContentType(MediaType.APPLICATION_JSON);
 
         this.mockServer
-                .expect(requestTo(SOCIAL_REST_URL_BASE + "/nkalbums/nkgroup/@me/@self/group.123?startIndex=0&count=20"))
+                .expect(requestTo(oper.getSocialResourceUrl() + "/nkalbums/nkgroup/@me/@self/group.123?startIndex=0&count=20"))
                 .andExpect(method(GET)).andRespond(withResponse(jsonResource("albums"), responseHeaders));
 
         this.oper.getGroupAlbums("group.123");

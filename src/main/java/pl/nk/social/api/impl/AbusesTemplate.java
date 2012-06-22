@@ -13,7 +13,7 @@ public class AbusesTemplate extends AbstractNkTemplate<AbusesTemplate> implement
      * @param restTemplate RestTemplate
      * @param isAuthorized boolean
      */
-    public AbusesTemplate(RestTemplate restTemplate, boolean isAuthorized) {
-        super(restTemplate, isAuthorized);
+    public AbusesTemplate(RestTemplate restTemplate, boolean isAuthorized, String socialResourceUrl, String commonResourceUrl) {
+        super(restTemplate, isAuthorized, socialResourceUrl, commonResourceUrl);
     }
 }

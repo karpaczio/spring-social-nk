@@ -13,8 +13,8 @@ public class RateTemplate extends AbstractNkTemplate<RateTemplate> implements Ra
      * @param restTemplate RestTemplate
      * @param isAuthorized boolean
      */
-    public RateTemplate(RestTemplate restTemplate, boolean isAuthorized) {
-        super(restTemplate, isAuthorized);
+    public RateTemplate(RestTemplate restTemplate, boolean isAuthorized, String socialResourceUrl, String commonResourceUrl) {
+        super(restTemplate, isAuthorized, socialResourceUrl, commonResourceUrl);
     }
 
 }

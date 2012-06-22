@@ -4,16 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.shindig.social.core.model.AlbumImpl;
-import org.apache.shindig.social.opensocial.model.MediaItem;
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
-import org.codehaus.jackson.annotate.JsonValue;
 import org.codehaus.jackson.map.annotate.JsonDeserialize;
-import org.codehaus.jackson.map.ser.std.EnumSerializer;
 
 import pl.nk.opensocial.model.ApplicationMediaItem;
-import pl.nk.opensocial.model.NkPersonImpl;
 
 /**
  */

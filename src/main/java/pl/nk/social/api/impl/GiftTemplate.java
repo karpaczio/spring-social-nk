@@ -13,7 +13,7 @@ public class GiftTemplate extends AbstractNkTemplate<GiftTemplate> implements Gi
      * @param restTemplate RestTemplate
      * @param isAuthorized boolean
      */
-    public GiftTemplate(RestTemplate restTemplate, boolean isAuthorized) {
-        super(restTemplate, isAuthorized);
+    public GiftTemplate(RestTemplate restTemplate, boolean isAuthorized, String socialResourceUrl, String commonResourceUrl) {
+        super(restTemplate, isAuthorized, socialResourceUrl, commonResourceUrl);
     }
 }

@@ -12,8 +12,8 @@ public class PublicTemplate extends AbstractNkTemplate<PublicTemplate> implement
      * Constructor for PublicTemplate.
      * @param restTemplate RestTemplate
      */
-    public PublicTemplate(RestTemplate restTemplate) {
-        super(restTemplate, true);
+    public PublicTemplate(RestTemplate restTemplate, String socialResourceUrl, String commonResourceUrl) {
+        super(restTemplate, true, socialResourceUrl, commonResourceUrl);
     }
 
 }

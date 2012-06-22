@@ -22,15 +22,14 @@ import org.springframework.web.client.RestTemplate;
 public abstract class AbstractNkTemplate<E extends AbstractNkTemplate> extends AbstractOpenSearchOperations<E> {
 
     /**
-     * Field SOCIAL_REST_URL_BASE.
-     * (value is ""http://opensocial.nk-net.pl/v09/social/rest"")
+     * Url where resource server exposes social resources (e.g. profiles, photos).
      */
-    public static final String SOCIAL_REST_URL_BASE = "http://opensocial.nk-net.pl/v09/social/rest";
+    private String socialResourceUrl;
+
     /**
-     * Field COMMON_URL_BASE.
-     * (value is ""http://opensocial.nk-net.pl/v09/common"")
+     * Url where common (not social) resources are exposed (e.g. container version). 
      */
-    public static final String COMMON_URL_BASE = "http://opensocial.nk-net.pl/v09/common";
+    private String commonResourceUrl;
     
     /**
      * Field APPLICATION_JSON_CONTENT_TYPE.
@@ -66,10 +65,21 @@ public abstract class AbstractNkTemplate<E extends AbstractNkTemplate> extends A
      * @param restTemplate RestTemplate
      * @param isAuthorized boolean
      */
-    public AbstractNkTemplate(RestTemplate restTemplate, boolean isAuthorized) {
+    public AbstractNkTemplate(RestTemplate restTemplate, boolean isAuthorized, String socialResourceUrl, String commonResourceUrl) {
         this.restTemplate = restTemplate;
         this.isAuthorized = isAuthorized;
+        this.socialResourceUrl = socialResourceUrl;
+        this.commonResourceUrl = commonResourceUrl;
     }
+    
+    public String getSocialResourceUrl() {
+        return socialResourceUrl;
+    }
+
+    public String getCommonResourceUrl() {
+        return commonResourceUrl;
+    }
+
 
     /**
      * Method getRestTemplate.
@@ -95,7 +105,7 @@ public abstract class AbstractNkTemplate<E extends AbstractNkTemplate> extends A
      * @return URI
      */
     protected URI buildUri(String path, MultiValueMap<String, String> parameters) {
-        return URIBuilder.fromUri(SOCIAL_REST_URL_BASE + path).queryParams(parameters).build();
+        return URIBuilder.fromUri(socialResourceUrl + path).queryParams(parameters).build();
     }
 
     /**

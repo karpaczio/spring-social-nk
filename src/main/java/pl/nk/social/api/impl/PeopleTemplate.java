@@ -22,8 +22,8 @@ public class PeopleTemplate extends AbstractNkTemplate<PeopleTemplate> implement
      * @param restTemplate RestTemplate
      * @param isAuthorized boolean
      */
-    public PeopleTemplate(RestTemplate restTemplate, boolean isAuthorized) {
-        super(restTemplate, isAuthorized);
+    public PeopleTemplate(RestTemplate restTemplate, boolean isAuthorized, String socialResourceUrl, String commonResourceUrl) {
+        super(restTemplate, isAuthorized, socialResourceUrl, commonResourceUrl);
     }
 
     /**

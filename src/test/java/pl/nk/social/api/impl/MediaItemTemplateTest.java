@@ -6,7 +6,6 @@ import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.social.test.client.RequestMatchers.method;
 import static org.springframework.social.test.client.RequestMatchers.requestTo;
 import static org.springframework.social.test.client.ResponseCreators.withResponse;
-import static pl.nk.social.api.impl.AbstractNkTemplate.SOCIAL_REST_URL_BASE;
 
 import org.apache.shindig.protocol.RestfulCollection;
 import org.apache.shindig.social.opensocial.model.MediaItem;
@@ -19,7 +18,6 @@ import org.springframework.http.MediaType;
 
 import pl.nk.opensocial.model.ApplicationMediaItem;
 import pl.nk.social.api.MediaItemOperations;
-import pl.nk.social.api.impl.MediaItemTemplate;
 
 /**
  */
@@ -49,7 +47,7 @@ public class MediaItemTemplateTest extends AbstractTemplateTest {
         responseHeaders.setContentType(MediaType.APPLICATION_JSON);
 
         this.mockServer
-                .expect(requestTo(SOCIAL_REST_URL_BASE + "/mediaItems/@me/@self/album.1?startIndex=0&count=20"))
+                .expect(requestTo(oper.getSocialResourceUrl() + "/mediaItems/@me/@self/album.1?startIndex=0&count=20"))
                 .andExpect(method(GET)).andRespond(withResponse(jsonResource("mediaitems"), responseHeaders));
 
         RestfulCollection<ApplicationMediaItem> mediaItems = this.oper.getCurrentUserPhotos("album.1");
@@ -82,7 +80,7 @@ public class MediaItemTemplateTest extends AbstractTemplateTest {
         responseHeaders.setContentType(MediaType.APPLICATION_JSON);
 
         this.mockServer
-                .expect(requestTo(SOCIAL_REST_URL_BASE + "/mediaItems/@me/@self/album.1"))
+                .expect(requestTo(oper.getSocialResourceUrl() + "/mediaItems/@me/@self/album.1"))
                 .andExpect(method(POST)).andRespond(withResponse(jsonResource("mediaitems"), responseHeaders));
     
         Resource res = new ClassPathResource("/avatar.jpeg");

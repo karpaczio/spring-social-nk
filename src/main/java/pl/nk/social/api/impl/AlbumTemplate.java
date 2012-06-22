@@ -18,8 +18,8 @@ public class AlbumTemplate extends AbstractNkTemplate<AlbumTemplate> implements 
      * @param restTemplate RestTemplate
      * @param isAuthorized boolean
      */
-    public AlbumTemplate(RestTemplate restTemplate, boolean isAuthorized) {
-        super(restTemplate, isAuthorized);
+    public AlbumTemplate(RestTemplate restTemplate, boolean isAuthorized, String socialResourceUrl, String commonResourceUrl) {
+        super(restTemplate, isAuthorized, socialResourceUrl, commonResourceUrl);
     }
 
     /**

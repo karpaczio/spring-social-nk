@@ -13,8 +13,8 @@ public class PaymentTemplate extends AbstractNkTemplate<PaymentTemplate> impleme
      * @param restTemplate RestTemplate
      * @param isAuthorized boolean
      */
-    public PaymentTemplate(RestTemplate restTemplate, boolean isAuthorized) {
-        super(restTemplate, isAuthorized);
+    public PaymentTemplate(RestTemplate restTemplate, boolean isAuthorized, String socialResourceUrl, String commonResourceUrl) {
+        super(restTemplate, isAuthorized, socialResourceUrl, commonResourceUrl);
     }
 
 }

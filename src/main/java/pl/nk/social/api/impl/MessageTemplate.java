@@ -13,8 +13,8 @@ public class MessageTemplate extends AbstractNkTemplate<MessageTemplate> impleme
      * @param restTemplate RestTemplate
      * @param isAuthorized boolean
      */
-    public MessageTemplate(RestTemplate restTemplate, boolean isAuthorized) {
-        super(restTemplate, isAuthorized);
+    public MessageTemplate(RestTemplate restTemplate, boolean isAuthorized, String socialResourceUrl, String commonResourceUrl) {
+        super(restTemplate, isAuthorized, socialResourceUrl, commonResourceUrl);
     }
 
 }

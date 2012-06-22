@@ -40,6 +40,13 @@ import pl.nk.social.api.oauth.consumer.client.NkOAuthClientHttpRequestFactory;
  */
 public class NkTemplate extends AbstractOAuth2ApiBinding implements Nk {
 
+    private static final String RESOURCE_SERVER_URL_DEFAULT = "http://opensocial.nk-net.pl"; 
+    private static final String SOCIAL_SUFFIX = "/v09/social/rest";
+    private static final String COMMON_SUFFIX = "/v09/common";
+    
+    private String socialResourceUrl = RESOURCE_SERVER_URL_DEFAULT + SOCIAL_SUFFIX;
+    private String commonResourceUrl = RESOURCE_SERVER_URL_DEFAULT + COMMON_SUFFIX;
+    
     /**
      * Field accessToken.
      */
@@ -116,7 +123,15 @@ public class NkTemplate extends AbstractOAuth2ApiBinding implements Nk {
      * @param resource ProtectedResourceDetails
      */
     public NkTemplate(String accessToken, ProtectedResourceDetails resource) {
+        this(accessToken, resource, null);
+    }
+    
+    public NkTemplate(String accessToken, ProtectedResourceDetails resource, String resourceServerUrl) {
         super();
+        if (resourceServerUrl != null) {
+            this.socialResourceUrl = resourceServerUrl + SOCIAL_SUFFIX;
+            this.commonResourceUrl = resourceServerUrl + COMMON_SUFFIX;
+        }
         this.accessToken = accessToken;
         this.oauthConsumerSupport = new NkCoreOAuthConsumerSupport(resource);
         setOAuthSecurityContext(resource);
@@ -315,20 +330,20 @@ public class NkTemplate extends AbstractOAuth2ApiBinding implements Nk {
      * Method initSubApis.
      */
     private final void initSubApis() {
-        this.abusesOperations = new AbusesTemplate(getRestTemplate(), isAuthorized());
-        this.activityOperations = new ActivityTemplate(getRestTemplate(), isAuthorized());
-        this.albumOperations = new AlbumTemplate(getRestTemplate(), isAuthorized());
-        this.applicationOperations = new ApplicationTemplate(getRestTemplate(), isAuthorized());
-        this.commentOperations = new CommentTemplate(getRestTemplate(), isAuthorized());
-        this.giftOperations = new GiftTemplate(getRestTemplate(), isAuthorized());
-        this.groupOperations = new GroupTemplate(getRestTemplate(), isAuthorized());
-        this.mediaItemOperations = new MediaItemTemplate(getRestTemplate(), isAuthorized());
-        this.messageOperations = new MessageTemplate(getRestTemplate(), isAuthorized());
-        this.paymentOperations = new PaymentTemplate(getRestTemplate(), isAuthorized());
-        this.peopleOperations = new PeopleTemplate(getRestTemplate(), isAuthorized());
-        this.rateOperations = new RateTemplate(getRestTemplate(), isAuthorized());
-        this.recommendOperations = new RecommendTemplate(getRestTemplate(), isAuthorized());
-        this.publicOperations = new PublicTemplate(getUnsecureRestTemplate());
+        this.abusesOperations = new AbusesTemplate(getRestTemplate(), isAuthorized(), socialResourceUrl, commonResourceUrl);
+        this.activityOperations = new ActivityTemplate(getRestTemplate(), isAuthorized(), socialResourceUrl, commonResourceUrl);
+        this.albumOperations = new AlbumTemplate(getRestTemplate(), isAuthorized(), socialResourceUrl, commonResourceUrl);
+        this.applicationOperations = new ApplicationTemplate(getRestTemplate(), isAuthorized(), socialResourceUrl, commonResourceUrl);
+        this.commentOperations = new CommentTemplate(getRestTemplate(), isAuthorized(), socialResourceUrl, commonResourceUrl);
+        this.giftOperations = new GiftTemplate(getRestTemplate(), isAuthorized(), socialResourceUrl, commonResourceUrl);
+        this.groupOperations = new GroupTemplate(getRestTemplate(), isAuthorized(), socialResourceUrl, commonResourceUrl);
+        this.mediaItemOperations = new MediaItemTemplate(getRestTemplate(), isAuthorized(), socialResourceUrl, commonResourceUrl);
+        this.messageOperations = new MessageTemplate(getRestTemplate(), isAuthorized(), socialResourceUrl, commonResourceUrl);
+        this.paymentOperations = new PaymentTemplate(getRestTemplate(), isAuthorized(), socialResourceUrl, commonResourceUrl);
+        this.peopleOperations = new PeopleTemplate(getRestTemplate(), isAuthorized(), socialResourceUrl, commonResourceUrl);
+        this.rateOperations = new RateTemplate(getRestTemplate(), isAuthorized(), socialResourceUrl, commonResourceUrl);
+        this.recommendOperations = new RecommendTemplate(getRestTemplate(), isAuthorized(), socialResourceUrl, commonResourceUrl);
+        this.publicOperations = new PublicTemplate(getUnsecureRestTemplate(), socialResourceUrl, commonResourceUrl);
     }
 
     /**

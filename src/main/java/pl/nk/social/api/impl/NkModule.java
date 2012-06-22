@@ -1,7 +1,5 @@
 package pl.nk.social.api.impl;
 
-import java.util.HashMap;
-
 import org.apache.shindig.protocol.RestfulCollection;
 import org.apache.shindig.social.core.model.AlbumImpl;
 import org.apache.shindig.social.opensocial.model.Album;
@@ -9,7 +7,6 @@ import org.apache.shindig.social.opensocial.model.MediaItem;
 import org.codehaus.jackson.Version;
 import org.codehaus.jackson.map.introspect.JacksonAnnotationIntrospector;
 import org.codehaus.jackson.map.module.SimpleModule;
-import org.codehaus.jackson.map.util.EnumResolver;
 
 import pl.nk.opensocial.model.ApplicationMediaItem;
 import pl.nk.opensocial.model.ApplicationMediaItemImpl;
@@ -26,7 +23,7 @@ public class NkModule extends SimpleModule {
      * Constructor for NkModule.
      */
     public NkModule() {
-        super("NkModule", new Version(0, 0, 1, "SNAPSHOT"));
+        super("NkModule", new Version(1, 0, 1, "SNAPSHOT"));
     }
 
     /**
@@ -36,37 +33,46 @@ public class NkModule extends SimpleModule {
     @Override
     public void setupModule(SetupContext context) {
 
-        setMixInAnnotation(Album.class, AlbumMixIn.class);
-        setMixInAnnotation(AlbumImpl.class, AlbumMixIn.class);
-        setMixInAnnotation(ApplicationMediaItem.class, ApplicationMediaItemMixIn.class);
-        setMixInAnnotation(ApplicationMediaItemImpl.class, ApplicationMediaItemMixIn.class);
-        setMixInAnnotation(NkActivity.class, NkActivityMixIn.class);
-        setMixInAnnotation(NkActivityImpl.class, NkActivityMixIn.class);
-        setMixInAnnotation(NkPerson.class, NkPersonMixIn.class);
-        setMixInAnnotation(NkPersonImpl.class, NkPersonMixIn.class);
-        setMixInAnnotation(RestfulCollection.class, RestfulCollectionMixIn.class);
+        
+        setMixInAnnotation(context, Album.class, AlbumMixIn.class);
+        setMixInAnnotation(context, AlbumImpl.class, AlbumMixIn.class);
+        setMixInAnnotation(context, ApplicationMediaItem.class, ApplicationMediaItemMixIn.class);
+        setMixInAnnotation(context, ApplicationMediaItemImpl.class, ApplicationMediaItemMixIn.class);
+        setMixInAnnotation(context, NkActivity.class, NkActivityMixIn.class);
+        setMixInAnnotation(context, NkActivityImpl.class, NkActivityMixIn.class);
+        setMixInAnnotation(context, NkPerson.class, NkPersonMixIn.class);
+        setMixInAnnotation(context, NkPersonImpl.class, NkPersonMixIn.class);
+        setMixInAnnotation(context, RestfulCollection.class, RestfulCollectionMixIn.class);
 
+        
         // This is because instead of IMAGE we receive image in case of MediaItem.Type
         // In jackson-2.0.0 use @JsonValue instead
         context.insertAnnotationIntrospector(new NkJacksonAnnotationIntrospector());
 
+        
         super.setupModule(context);
     }
+    
+    private void setMixInAnnotation(SetupContext context, Class<?> target, Class<?> mixinSource) {
+        context.setMixInAnnotations(target, mixinSource);
+        // context.getSerializationConfig().addMixInAnnotations(target, mixinSource);
+        // context.getDeserializationConfig().addMixInAnnotations(target, mixinSource);
+    }
 
-    /**
-     */
+/*    *//**
+     *//*
     class CustomEnumResolver<T extends Enum<T>> extends EnumResolver<T> {
-        /**
+        *//**
          * Constructor for CustomEnumResolver.
          * @param enumClass Class<T>
          * @param enums T[]
          * @param map HashMap<String,T>
-         */
+         *//*
         CustomEnumResolver(Class<T> enumClass, T[] enums, HashMap<String, T> map) {
             super(enumClass, enums, map);
         }
     }
-
+*/
     /**
      */
     class NkJacksonAnnotationIntrospector extends JacksonAnnotationIntrospector {

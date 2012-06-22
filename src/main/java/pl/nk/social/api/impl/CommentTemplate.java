@@ -13,7 +13,7 @@ public class CommentTemplate extends AbstractNkTemplate<CommentTemplate> impleme
      * @param restTemplate RestTemplate
      * @param isAuthorized boolean
      */
-    public CommentTemplate(RestTemplate restTemplate, boolean isAuthorized) {
-        super(restTemplate, isAuthorized);
+    public CommentTemplate(RestTemplate restTemplate, boolean isAuthorized, String socialResourceUrl, String commonResourceUrl) {
+        super(restTemplate, isAuthorized, socialResourceUrl, commonResourceUrl);
     }
 }

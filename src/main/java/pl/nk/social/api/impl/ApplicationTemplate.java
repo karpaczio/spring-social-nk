@@ -13,7 +13,7 @@ public class ApplicationTemplate extends AbstractNkTemplate<ApplicationTemplate>
      * @param restTemplate RestTemplate
      * @param isAuthorized boolean
      */
-    public ApplicationTemplate(RestTemplate restTemplate, boolean isAuthorized) {
-        super(restTemplate, isAuthorized);
+    public ApplicationTemplate(RestTemplate restTemplate, boolean isAuthorized, String socialResourceUrl, String commonResourceUrl) {
+        super(restTemplate, isAuthorized, socialResourceUrl, commonResourceUrl);
     }
 }

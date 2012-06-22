@@ -26,4 +26,8 @@ public interface CommonOpenSocialOperations<T> {
      * @return T
      */
     T setFields(Collection<?> fields);
+    
+    String getSocialResourceUrl();
+
+    String getCommonResourceUrl();
 }
